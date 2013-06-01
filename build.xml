@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2010-2013 the original author or authors.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="migrate to mybatis3" basedir="." default="migrateToMyBatis3">
+	<target name="migrateToMyBatis3">
+		<!-- delete possible results from previous run -->
+		<delete>
+		    <fileset dir="destination" includes="*.xml"/>
+		  </delete>
+		<!-- xslt convert sqlMaps 2 to mybatis 3 -->
+		<xslt basedir="source" style="migrate.xslt" includes="*.xml" destdir="destination" extension=".xml"/>
+		<!-- replace #id:NUMERIC# to #id,jdbcType=NUMERIC# etc. -->
+		<replace dir="destination" includes="*.xml" token=":NUMERIC#" value=",jdbcType=NUMERIC#" encoding="UTF8"/>
+		<replace dir="destination" includes="*.xml" token=":TIMESTAMP#" value=",jdbcType=TIMESTAMP#" encoding="UTF8"/>
+		<replace dir="destination" includes="*.xml" token=":VARCHAR#" value=",jdbcType=VARCHAR#" encoding="UTF8"/>
+		<replace dir="destination" includes="*.xml" token=":BLOB#" value=",jdbcType=BLOB#" encoding="UTF8"/>
+		<!-- add any needed jdbc type here (for example :CLOB#, :FLOAT#, :REAL#, :BIT#, :INTEGER#, :DECIMAL#, :DATE#, :TIME#, .... ) 
+		<replace dir="destination" includes="*.xml" token=":???#" value=",jdbcType=???#" encoding="UTF8"/>
+		-->
+		<!-- replace $id$ with ${id} -->
+		<replaceregexp match="\$([a-zA-Z0-9.\[\]_]+)\$" replace="$\{\1}" flags="mg" byline="false" encoding="UTF8">
+		    <fileset dir="destination" includes="*.xml" />
+		</replaceregexp>
+		<!-- replace #id# with #{id} -->
+		<replaceregexp match="#([a-zA-Z0-9,_.=\[\]]{2,})#" replace="#{\1}" flags="mg" byline="false" encoding="UTF8">
+		    <fileset dir="destination" includes="*.xml" />
+		</replaceregexp>
+		<!-- replace xyz[] with item for use in iterators-->
+		<replaceregexp match="[a-z.]{2,}\[\]" replace="item" flags="ig" encoding="UTF8">
+		    <fileset dir="destination" includes="*.xml" />
+		</replaceregexp>
+
+		<xmlvalidate failonerror="yes" lenient="false" warn="yes">
+				<attribute name="http://apache.org/xml/features/validation/schema"  value="false" />
+				<attribute name="http://xml.org/sax/features/namespaces" value="false" />
+			<fileset dir="destination" includes="*.xml" />
+			<dtd publicId="-//mybatis.org//DTD SQL Map Config 3.0//EN" location="mybatis-3-config.dtd" />
+			<dtd publicId="-//mybatis.org//DTD Mapper 3.0//EN" location="mybatis-3-mapper.dtd" />
+		</xmlvalidate>
+
+	</target>
+</project>
