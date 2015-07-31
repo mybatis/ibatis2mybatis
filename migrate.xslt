@@ -418,6 +418,34 @@
   	</xsl:element>
 </xsl:template>
 
+<xsl:template match="isNotEmpty">
+	<xsl:element name="if">
+		<xsl:attribute name="test">
+			<xsl:if test="substring-before(@property, '.')">
+				<xsl:value-of select="substring-before(@property, '.')" /><xsl:text> != null and </xsl:text>
+			</xsl:if>
+			<xsl:value-of select="@property" /><xsl:text> != null and </xsl:text>
+			<xsl:value-of select="@property" /><xsl:text> != ''</xsl:text>
+		</xsl:attribute>
+		<xsl:value-of select="@prepend" />
+  		<xsl:apply-templates/>
+  	</xsl:element>
+</xsl:template>
+
+<xsl:template match="isEmpty">
+	<xsl:element name="if">
+		<xsl:attribute name="test">
+			<xsl:if test="substring-before(@property, '.')">
+				<xsl:value-of select="substring-before(@property, '.')" /><xsl:text> != null and </xsl:text>
+			</xsl:if>
+			<xsl:value-of select="@property" /><xsl:text> == null or </xsl:text>
+			<xsl:value-of select="@property" /><xsl:text> == ''</xsl:text>
+		</xsl:attribute>
+		<xsl:value-of select="@prepend" />
+  		<xsl:apply-templates/>
+  	</xsl:element>
+</xsl:template>
+
 <xsl:template match="isGreaterThan">
 	<xsl:element name="if">
 		<xsl:attribute name="test">
