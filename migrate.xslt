@@ -366,9 +366,14 @@
 		<xsl:if test="@property">
 			<xsl:attribute name="property"><xsl:value-of select="@property" /></xsl:attribute>
 		</xsl:if>
-		<xsl:if test="@column">
-			<xsl:attribute name="column"><xsl:value-of select="@column" /></xsl:attribute>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="@column">
+				<xsl:attribute name="column"><xsl:value-of select="@column" /></xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="column"><xsl:value-of select="@property" /></xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:if test="@javaType">
 			<xsl:attribute name="javaType"><xsl:value-of select="@javaType" /></xsl:attribute>
 		</xsl:if>
