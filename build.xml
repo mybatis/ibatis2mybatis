@@ -21,7 +21,13 @@
 		    <fileset dir="destination" includes="*.xml"/>
 		  </delete>
 		<!-- xslt convert sqlMaps 2 to mybatis 3 -->
-		<xslt basedir="source" style="migrate.xslt" includes="*.xml" destdir="destination" extension=".xml"/>
+		<xslt basedir="source" style="migrate.xslt" includes="*.xml" destdir="destination" extension=".xml">
+		    <xmlcatalog>
+		        <dtd publicId="-//ibatis.apache.org//DTD SQL Map 2.0//EN" location="dtd/sql-map-2.dtd"/>
+		        <dtd publicId="-//www.ibatis.com//DTD SQL Map 2.0//EN" location="dtd/sql-map-2.dtd"/>
+		    </xmlcatalog>
+		    
+		</xslt>
 		<!-- replace #id:NUMERIC# to #id,jdbcType=NUMERIC# etc. -->
 		<replace dir="destination" includes="*.xml" token=":NUMERIC#" value=",jdbcType=NUMERIC#" encoding="UTF8"/>
 		<replace dir="destination" includes="*.xml" token=":TIMESTAMP#" value=",jdbcType=TIMESTAMP#" encoding="UTF8"/>
@@ -47,8 +53,8 @@
 				<attribute name="http://apache.org/xml/features/validation/schema"  value="false" />
 				<attribute name="http://xml.org/sax/features/namespaces" value="false" />
 			<fileset dir="destination" includes="*.xml" />
-			<dtd publicId="-//mybatis.org//DTD SQL Map Config 3.0//EN" location="mybatis-3-config.dtd" />
-			<dtd publicId="-//mybatis.org//DTD Mapper 3.0//EN" location="mybatis-3-mapper.dtd" />
+			<dtd publicId="-//mybatis.org//DTD SQL Map Config 3.0//EN" location="dtd/mybatis-3-config.dtd" />
+			<dtd publicId="-//mybatis.org//DTD Mapper 3.0//EN" location="dtd/mybatis-3-mapper.dtd" />
 		</xmlvalidate>
 
 	</target>
