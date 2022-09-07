@@ -1,7 +1,7 @@
 ﻿ibatis2mybatis
 ==============
 
-![mybatis](http://mybatis.github.io/images/mybatis-logo.png)
+![mybatis](https://mybatis.org/images/mybatis-logo.png)
 
 The tool is designed around an xslt transformation and some text replacements packaged in an ant task and tries to deliver a good starting point before the more complex work begins.
 
