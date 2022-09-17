@@ -64,7 +64,9 @@
   <properties>
     <clirr.comparisonVersion>1.0.0-SNAPSHOT</clirr.comparisonVersion>
     <module.name>org.mybatis.ibatis2mybatis</module.name>
-    <project.build.outputTimestamp>1645112687</project.build.outputTimestamp>
+
+    <!-- Reproducible Builds -->
+    <project.build.outputTimestamp>1757561022</project.build.outputTimestamp>
   </properties>
 
   <build>
