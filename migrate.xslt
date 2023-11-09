@@ -509,6 +509,29 @@
   	</xsl:element>
 </xsl:template>
 
+<xsl:template match="isNotEqual">
+	<xsl:element name="if">
+		<xsl:attribute name="test">
+			<xsl:if test="substring-before(@property, '.')">
+				<xsl:value-of select="substring-before(@property, '.')" /><xsl:text> != null and </xsl:text>
+			</xsl:if>
+			<xsl:value-of select="@property" />
+			<xsl:text><![CDATA[ != ]]></xsl:text>
+			<xsl:value-of select="@compareProperty" />
+			<xsl:choose>
+				<xsl:when test="number(@compareValue) &gt; '-999999999'">
+					<xsl:value-of select="@compareValue" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text><![CDATA["]]></xsl:text><xsl:value-of select="@compareValue" /><xsl:text><![CDATA["]]></xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
+		<xsl:value-of select="@prepend" />
+		<xsl:apply-templates/>
+	</xsl:element>
+</xsl:template>
+
 <xsl:template match="isLessEqual">
 	<xsl:element name="if">
 		<xsl:attribute name="test">
