@@ -17,6 +17,7 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -33,7 +34,7 @@
 
   <name>ibatis2mybatis</name>
   <description>The tool is designed around an xslt transformation and some text replacements packaged in an ant task and tries to deliver a good starting point before the more complex work begins.</description>
-  <url>http://www.mybatis.org/</url>
+  <url>https://www.mybatis.org/ibatis2mybatis/</url>
 
   <inceptionYear>2004</inceptionYear>
 
@@ -41,7 +42,7 @@
     <connection>scm:git:ssh://git@github.com/mybatis/ibatis2mybatis.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/ibatis2mybatis.git</developerConnection>
     <tag>HEAD</tag>
-    <url>http://github.com/mybatis/ibatis2mybatis</url>
+    <url>https://github.com/mybatis/ibatis2mybatis/</url>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
