@@ -82,7 +82,7 @@
             <phase>prepare-package</phase>
             <configuration>
               <target>
-                <ant antfile="${basedir}/build.xml">
+                <ant antfile="${project.basedir}/build.xml">
                   <target name="migrateToMyBatis3"/>
                 </ant>
               </target>
