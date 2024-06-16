@@ -401,6 +401,37 @@
 	<xsl:copy-of select="."/>
 </xsl:template>
 
+<xsl:template match="dynamic">
+    <xsl:choose>
+        <xsl:when test="@prepend = 'SET' or @prepend = 'set'">
+            <xsl:element name="set">
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:when>
+        <xsl:when test="@prepend = 'where' or @prepend = 'WHERE'">
+            <xsl:element name="where">
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:variable name="abcd" select="."/>
+            <xsl:message>11111<xsl:value-of select="$abcd"/></xsl:message>
+            <xsl:element name="dynamic">
+                <xsl:if test="@prepend">
+                    <xsl:attribute name="prepend"><xsl:value-of select="@prepend" /></xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@open">
+                    <xsl:attribute name="open"><xsl:value-of select="@open" /></xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@close">
+                    <xsl:attribute name="close"><xsl:value-of select="@close" /></xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
 <xsl:template match="isNull">
 	<xsl:element name="if">
 		<xsl:attribute name="test">
