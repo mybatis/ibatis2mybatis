@@ -25,6 +25,10 @@
 		    <xmlcatalog>
 		        <dtd publicId="-//ibatis.apache.org//DTD SQL Map 2.0//EN" location="dtd/sql-map-2.dtd"/>
 		        <dtd publicId="-//www.ibatis.com//DTD SQL Map 2.0//EN" location="dtd/sql-map-2.dtd"/>
+		        <dtd publicId="-//iBATIS.com//DTD SQL Map 2.0//EN" location="dtd/sql-map-2.dtd"/>
+		        <dtd publicId="-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" location="dtd/sql-map-config-2.dtd"/>
+		        <dtd publicId="-//www.ibatis.com//DTD SQL Map Config 2.0//EN" location="dtd/sql-map-2.dtd"/>
+		        <dtd publicId="-//iBATIS.com//DTD SQL Map Config 2.0//EN" location="dtd/sql-map-config-2.dtd"/>
 		    </xmlcatalog>
 		    
 		</xslt>
