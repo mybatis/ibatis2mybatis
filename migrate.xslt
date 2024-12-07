@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2010-2013 the original author or authors.
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+    Copyright 2004-2024 the original author or authors.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
+       https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
 -->
 <xsl:stylesheet
 	version="1.0"
@@ -366,9 +368,14 @@
 		<xsl:if test="@property">
 			<xsl:attribute name="property"><xsl:value-of select="@property" /></xsl:attribute>
 		</xsl:if>
-		<xsl:if test="@column">
-			<xsl:attribute name="column"><xsl:value-of select="@column" /></xsl:attribute>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="@column">
+				<xsl:attribute name="column"><xsl:value-of select="@column" /></xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="column"><xsl:value-of select="@property" /></xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:if test="@javaType">
 			<xsl:attribute name="javaType"><xsl:value-of select="@javaType" /></xsl:attribute>
 		</xsl:if>
@@ -392,6 +399,37 @@
 
 <xsl:template match="include">
 	<xsl:copy-of select="."/>
+</xsl:template>
+
+<xsl:template match="dynamic">
+    <xsl:choose>
+        <xsl:when test="@prepend = 'SET' or @prepend = 'set'">
+            <xsl:element name="set">
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:when>
+        <xsl:when test="@prepend = 'where' or @prepend = 'WHERE'">
+            <xsl:element name="where">
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:variable name="abcd" select="."/>
+            <xsl:message>11111<xsl:value-of select="$abcd"/></xsl:message>
+            <xsl:element name="dynamic">
+                <xsl:if test="@prepend">
+                    <xsl:attribute name="prepend"><xsl:value-of select="@prepend" /></xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@open">
+                    <xsl:attribute name="open"><xsl:value-of select="@open" /></xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@close">
+                    <xsl:attribute name="close"><xsl:value-of select="@close" /></xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates/>
+            </xsl:element>
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template match="isNull">
@@ -507,6 +545,29 @@
 		<xsl:value-of select="@prepend" />
 		<xsl:apply-templates/>
   	</xsl:element>
+</xsl:template>
+
+<xsl:template match="isNotEqual">
+	<xsl:element name="if">
+		<xsl:attribute name="test">
+			<xsl:if test="substring-before(@property, '.')">
+				<xsl:value-of select="substring-before(@property, '.')" /><xsl:text> != null and </xsl:text>
+			</xsl:if>
+			<xsl:value-of select="@property" />
+			<xsl:text><![CDATA[ != ]]></xsl:text>
+			<xsl:value-of select="@compareProperty" />
+			<xsl:choose>
+				<xsl:when test="number(@compareValue) &gt; '-999999999'">
+					<xsl:value-of select="@compareValue" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text><![CDATA["]]></xsl:text><xsl:value-of select="@compareValue" /><xsl:text><![CDATA["]]></xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
+		<xsl:value-of select="@prepend" />
+		<xsl:apply-templates/>
+	</xsl:element>
 </xsl:template>
 
 <xsl:template match="isLessEqual">
