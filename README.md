@@ -1,6 +1,12 @@
 ﻿ibatis2mybatis
 ==============
 
+[![Java CI](https://github.com/mybatis/ibatis2mybats/workflows/Java%20CI/badge.svg)](https://github.com/mybatis/ibatis2mybats/actions?query=workflow%3A%22Java+CI%22)
+[![Coverage Status](https://coveralls.io/repos/mybatis/ibatis2mybats/badge.svg?branch=master&service=github)](https://coveralls.io/github/mybatis/ibatis2mybats?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/org.mybatis/mybatis-ibatis2mybats.svg)](https://central.sonatype.com/artifact/org.mybatis/mybatis-ibatis2mybats)
+[![Docs](https://img.shields.io/badge/docs-mybatis.org-blue?logo=github)](https://mybatis.org/ibatis2mybats/)
+[![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 ![mybatis](https://mybatis.org/images/mybatis-logo.png)
 
 The tool is designed around an xslt transformation and some text replacements packaged in an ant task and tries to deliver a good starting point before the more complex work begins.
